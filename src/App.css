@@ -91,7 +91,7 @@
 }
 
 .form__container {
-  width: 50%;
+  width: 80%;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -240,7 +240,7 @@
   align-items: center;
 }
 
-.copy-url-btn  {
+.copy-url-btn {
   font-size: 0.8rem;
 }
 
@@ -271,5 +271,19 @@
   /* width: 100% !important; */
   height: 60vh !important;
   overflow-x: scroll;
+}
 
+@media screen and (max-width: 1044px) {
+  /* Your styles here for medium-sized screens */
+  .login-form-verlay-left__container {
+    display: none;
+  }
+
+  .login-form-verlay-right__container {
+    width: 100%;
+  }
+
+  .form__container {
+    width: 80%;
+  }
 }
