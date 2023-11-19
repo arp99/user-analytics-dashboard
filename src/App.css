@@ -1,38 +1,137 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 .App {
+  width: 100%;
+  height: 100%;
+  font-family: sans-serif;
+}
+
+.main-page-content {
+  height: 100%;
+  width: 100vw;
+}
+
+.login-page__container {
+  height: 100vh;
+  width: 100vw;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.blur-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background-image: url("./assets/auth_background.jpeg");
+  background-size: cover;
+  background-position: center;
+  filter: blur(8px); /* Apply the blur effect */
+  -webkit-backdrop-filter: blur(8px); /* For older Safari browsers */
+}
+
+.login-page__container > .login-form-overlay__container {
+  width: 80%;
+  height: 90%;
+  background: #fff;
+  border-radius: 2rem;
+  z-index: 1;
+  box-shadow: 0px 18px 31px 6px rgb(3, 97, 218);
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 4rem;
+
+  /* change dimensions in smaller screens  */
+}
+
+.login-form-verlay-left__container {
+  width: 40%;
+}
+
+.login-form-verlay-left__container > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 2rem;
+}
+
+.login-form-verlay-right__container {
+  width: 60%;
+
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.login-form-verlay-right__container > .heading {
+  font-size: 2.5rem;
+  font-weight: 600;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.form__container {
+  width: 50%;
+  margin: auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 0.8rem;
 }
 
-.App-link {
-  color: #61dafb;
+.form__container > .input_group {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.input_group > .input-label {
+  font-size: 14px;
+}
+
+.input_group > .input-box {
+  padding: 0.75rem 0.5rem;
+  border-radius: 4px;
+  border: 1px solid grey;
+  outline: none;
+}
+
+.input-box.error {
+  border-color: #cb411a;
+}
+
+.input_group > .error-text {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #cb411a;
+}
+
+.primary-btn {
+  width: 100%;
+  border-radius: 4px;
+  outline: none;
+  padding: 0.75rem 0.5rem;
+  text-align: center;
+  background-color: #007adf;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+.primary-btn:hover {
+  background-color: #035ca4;
+}
+
+.primary-link {
+  font-weight: 400;
+  color: #004ad4;
+  cursor: pointer;
 }
