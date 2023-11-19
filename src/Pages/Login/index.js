@@ -93,7 +93,7 @@ export const Login = () => {
           localStorage.setItem("token", token);
 
           toast.success("User logged successfully");
-          navigate("/");
+          window.location.href = "/";
         })
         .catch((err) => {
           setLoading(false);
@@ -112,7 +112,7 @@ export const Login = () => {
         localStorage.setItem("token", token);
 
         toast.success("User logged successfully");
-        navigate("/");
+        window.location.href = "/";
       })
       .catch((err) => {
         setLoading(false);

@@ -4,6 +4,16 @@ import { FilterModal } from "./Components/FilterModal";
 import { BarChart } from "./Components/BarChart";
 import { LineChart } from "./Components/LineChart";
 import { toast } from "react-toastify";
+import {
+  copyToClipboard,
+  deleteCookie,
+  formQueryString,
+  getCookie,
+  searchStringToObject,
+  setCookie,
+} from "../../utils";
+import { CopySimple, Check } from "phosphor-react";
+import { useNavigate } from "react-router-dom";
 
 export const Dashboard = () => {
   const [filters, setFilters] = useState({
@@ -16,6 +26,8 @@ export const Dashboard = () => {
   const [showFilterModal, setShowFilterModal] = useState(false);
   const [chartData, setChartData] = useState([]);
   const [dataLoding, setDataLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const navigate = useNavigate();
 
   const getChartData = (filters = {}) => {
     setDataLoading(true);
@@ -58,6 +70,8 @@ export const Dashboard = () => {
       query.age = age;
     }
 
+    setCookie("filters", JSON.stringify(query));
+
     setShowFilterModal(false);
 
     getChartData(query);
@@ -73,27 +87,80 @@ export const Dashboard = () => {
     }));
     setShowFilterModal(false);
     getChartData({});
+    deleteCookie("filters");
   };
 
   const onCancel = () => {
     setShowFilterModal(false);
   };
 
+  const copyMagicUrl = (filters) => {
+    const queryString = formQueryString(filters);
+    let url = `${window.location.origin}${window.location.pathname}`;
+    if (queryString) {
+      url = `${window.location.origin}${
+        window.location.pathname
+      }?${formQueryString(filters)}`;
+    }
+    if (copyToClipboard(url)) {
+      setCopied(true);
+      setTimeout(() => {
+        setCopied(false);
+      }, 1500);
+    }
+  };
+
+  const onLogout = () => {
+    localStorage.removeItem("token")
+    window.location.href = "/"
+  }
+
   useEffect(() => {
-    getChartData();
+    const urlFilters = searchStringToObject(window.location.search);
+
+    if (urlFilters && Object.keys(urlFilters).length) {
+      setCookie("filters", JSON.stringify(urlFilters));
+      setFilters(urlFilters);
+      getChartData(urlFilters);
+      navigate("/", {
+        replace: true,
+      });
+    } else {
+      const savedFilters = getCookie("filters");
+      if (savedFilters) {
+        const filters = JSON.parse(savedFilters);
+        setFilters(filters);
+        getChartData(filters);
+      } else {
+        getChartData();
+      }
+    }
   }, []);
 
   return (
     <>
       <div className="dashboard__container">
-        <button
-          className="add-filter-btn"
-          onClick={() => {
-            setShowFilterModal(true);
-          }}
-        >
-          Add Filters
-        </button>
+        <div className="d-flex">
+          <button
+            className="add-filter-btn"
+            onClick={() => {
+              setShowFilterModal(true);
+            }}
+          >
+            Add Filters
+          </button>
+          <div className="copy-url-btn  d-flex align-items-center">
+            Copy Magic URL
+            <div
+              onClick={() => {
+                copyMagicUrl(filters);
+              }}
+            >
+              {" "}
+              {copied ? <Check /> : <CopySimple />}
+            </div>
+          </div>
+        </div>
         <div className="charts__container">
           {dataLoding ? (
             <p className="">Loading...</p>
@@ -104,6 +171,10 @@ export const Dashboard = () => {
             </>
           )}
         </div>
+
+        <div className="logout-btn" onClick={() => {
+          onLogout()
+        }}>Logout</div>
       </div>
 
       {showFilterModal && (

@@ -15,6 +15,18 @@
   width: 100vw;
 }
 
+.logout-btn {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  background-color: #f24c1ede;
+  border-radius: 4px;
+  padding: 0.5rem;
+  color: #fff;
+  cursor: pointer;
+  width: max-content;
+}
+
 .login-page__container {
   height: 100vh;
   width: 100vw;
@@ -222,6 +234,18 @@
 .d-flex {
   display: flex;
   gap: 0.5rem;
+}
+
+.align-items-center {
+  align-items: center;
+}
+
+.copy-url-btn  {
+  font-size: 0.8rem;
+}
+
+.copy-url-btn > div > svg {
+  cursor: pointer;
 }
 
 .react-datepicker-wrapper {
